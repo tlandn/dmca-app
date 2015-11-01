@@ -3,7 +3,7 @@
     margin-bottom: 0;
     padding-bottom: 1em;
     text-align: center;
-    line-height: 1;
+    line-height: 1
 }
 
 .page-heading:after {
@@ -12,8 +12,5 @@
     width: 70px;
     height: 3px;
     background: red;
-    margin: 40px auto 0;
+    margin: 40px auto 0
 }
-
-
-/*# sourceMappingURL=app.css.map */
