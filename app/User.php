@@ -36,4 +36,14 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     *  A user may create many DMCA notices.
+     * 
+     *  @return \Illuminate\Database\ELoquent\Relations\HasMany
+     */
+    public function notices()
+    {
+        return $this->hasMany('App\Notice');
+    }
 }

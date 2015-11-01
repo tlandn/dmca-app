@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PrepareNoticeRequest;
-use App\Provider;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Requests\PrepareNoticeRequest;
+use App\Notice;
+use App\Provider;
+use Illuminate\Auth\Guard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoticesController extends Controller
 {
@@ -21,7 +22,7 @@ class NoticesController extends Controller
 
     public function index()
     {
-        return 'all notices';
+        return Auth::user()->notices;
     }
 
 
@@ -41,6 +42,7 @@ class NoticesController extends Controller
         session()->flash('dmca', $data);
 
         return view('notices.confirm', compact('template'));
+
     }
 
 
@@ -53,10 +55,18 @@ class NoticesController extends Controller
      */
     public function store(Request $request)
     {
-        $data = session()->get('dmca');
-        return $data;
+        $this->createNotice($request);
+        return redirect('notices');
     }
 
+    private function createNotice(Request $request)
+    {
+        $data = session()->get('dmca');
+        $notice = Notice::open($data)
+            ->useTemplate($request->input('template'));
+        
+        Auth::user()->notices()->save($notice);
+    }
 
     public function compileDmcaTemplate($data, Guard $auth)
     {
