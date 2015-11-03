@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"no",
+				"notices"
+			],
+			[
+				"Auth",
+				"Auth::user	Auth-user"
+			],
+			[
 				"boottext",
 				"boottextarea	textarea"
 			],
@@ -35,157 +43,30 @@
 			}
 		},
 		{
-			"contents": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse App\\Http\\Requests\\PrepareNoticeRequest;\nuse App\\Provider;\nuse Illuminate\\Contracts\\Auth\\Guard;\nuse Illuminate\\Http\\Request;\n\nuse App\\Http\\Requests;\nuse App\\Http\\Controllers\\Controller;\n\nclass NoticesController extends Controller\n{\n\n    public function __construct()\n    {\n        $this->middleware('auth');\n    }\n\n\n    public function index()\n    {\n        return 'all notices';\n    }\n\n\n    public function create()\n    {\n        // Get list of providers\n        $providers = Provider::lists('name', 'id');\n\n        // Load a view to create notice\n        return view('notices.create', compact('providers'));\n    }\n\n\n    public function confirm(PrepareNoticeRequest $request, Guard $auth)\n    {\n        $template = $this->compileDmcaTemplate($data = $request->all(), $auth);\n        session()->flash('dmca', $data);\n\n        return view('notices.confirm', compact('template'));\n\n    }\n\n\n    /**\n     *  Store a new DMCA notice.\n     *\n     * @param Request $request\n     *\n     * @return \\Illuminate\\Http\\RedirectResponse|\\Illuminate\\Routing\\Redirector\n     */\n    public function store(Request $request)\n    {\n        $data = session()->get('dmca');\n        return $data;\n    }\n\n\n    public function compileDmcaTemplate($data, Guard $auth)\n    {\n        $data = $data + [\n                'name'  => $auth->user()->name,\n                'email' => $auth->user()->email,\n            ];\n\n        return view()->file(app_path('Http/Templates/dmca.blade.php'), $data);\n    }\n\n}\n",
 			"file": "app/Http/Controllers/NoticesController.php",
-			"file_size": 1517,
-			"file_write_time": 130906688428399503,
 			"settings":
 			{
-				"buffer_size": 1518,
+				"buffer_size": 1836,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/css/app.css",
+			"file": "app/User.php",
 			"settings":
 			{
-				"buffer_size": 310,
+				"buffer_size": 1312,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "@extends('app')\n\n@section('content')\n    Home Page\n@stop\n\n{!! Form::open(['method' => 'POST', 'route' => 'routeName', 'class' => 'form-horizontal']) !!}\n\n    boottext\n\n    <div class=\"btn-group pull-right\">\n        {!! Form::reset(\"Reset\", ['class' => 'btn btn-warning']) !!}\n        {!! Form::submit(\"Add\", ['class' => 'btn btn-success']) !!}\n    </div>\n\n{!! Form::close() !!}\n\nboottext",
-			"file": "resources/views/pages/home.blade.php",
-			"file_size": 56,
-			"file_write_time": 130905663919033851,
+			"contents": "<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Notice extends Model\n{\n	\n\n    /**\n     *  Fillable fields for a new notice\n     */\n    protected $fillable = [\n        'provider_id',\n        'infringing_title',\n        'infringing_link',\n        'original_link',\n        'original_description',\n        'template',\n        'content_removed',\n    ];\n\n    /**\n     *  Open a new notice.\n     * \n     *  @param array $attributes\n     *  @return static\n     */\n	public static function open(array $attributes)\n    {\n        return new static($attributes);\n    }\n\n    /**\n     *  Set the email template for the notice.\n     * \n     *  @param strig $template\n     */\n    public function useTemplate($template)\n    {\n        $this->template = $template;\n\n        return $this;\n    }\n}\n",
+			"file": "app/Notice.php",
+			"file_size": 795,
+			"file_write_time": 130908605261054928,
 			"settings":
 			{
-				"buffer_size": 387,
+				"buffer_size": 798,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": ".page-heading {\n    margin-top: 1em;\n    margin-bottom: 0;\n    padding-bottom: 1em;\n    text-align: center;\n    line-height: 1\n}\n\n.page-heading:after {\n    content: '';\n    display: block;\n    width: 70px;\n    height: 3px;\n    background: red;\n    margin: 40px auto 0\n}\n!important",
-			"file": "public/css/app.min.css",
-			"file_size": 286,
-			"file_write_time": 130907637003574002,
-			"settings":
-			{
-				"buffer_size": 280,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "<div class=\"slider\">\n    <ul>\n        <li></li>\n    </ul>\n</div>\n<!-- Latest compiled and minified CSS & JS -->\n<link rel=\"stylesheet\" media=\"screen\" href=\"//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css\">\n<script src=\"//code.jquery.com/jquery.js\"></script>\n<script src=\"//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js\"></script>\n<!-- Latest compiled and minified CSS -->\n<link rel=\"stylesheet\" href=\"//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css\">\n<!-- Latest compiled and minified JS -->\n<script src=\"//code.jquery.com/jquery.js\"></script>\n<script src=\"//netdna.bootstrapcdn.com/bootstrap/<script src=\" //code.jquery.com/jquery.js \"></script>/js/bootstrap.min.js\"></script>\n<div class=\"panel panel-info\n\">\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">Panel title</h3>\n    </div>\n    <div class=\"panel-body\">\n        Panel content\n    </div>\n</div>\n<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Document</title>\n</head>\n\n<body>\n</body>\n\n</html>\n<div class=\"jumbotron text-center\">\n	<h1></h1>\n	<p></p>\n	<a href=\"\" id=\"go-button\" class=\"btn btn-danger\"></a>\n</div>\n\n{!! Form::open(['method' => 'POST', 'route' => 'routeName', 'class' => 'form-horizontal']) !!}\n\n    bootstrapcdn		\n\n\n    <div class=\"btn-group pull-right\">\n        {!! Form::reset(\"Reset\", ['class' => 'btn btn-warning']) !!}\n        {!! Form::submit(\"Add\", ['class' => 'btn btn-success']) !!}\n    </div>\n\n{!! Form::close() !!}\n\nbootstrapcdn\n\nbootstrapcdn\n\n{!! Form::open(['method' => 'g', 'route' => 'routeName', 'class' => 'form-horizontal']) !!}\n\n    boottext\n\n    <div class=\"btn-group pull-right\">\n        {!! Form::reset(\"Reset\", ['class' => 'btn btn-warning']) !!}\n        {!! Form::submit(\"Add\", ['class' => 'btn btn-success']) !!}\n    </div>\n\n{!! Form::close() !!}",
-			"file": "test.html",
-			"file_size": 1081,
-			"file_write_time": 130907654987902646,
-			"settings":
-			{
-				"buffer_size": 1837,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>DMCA App</title>\n    <link href=\"/css/all.css\" rel=\"stylesheet\">\n</head>\n\n<body>\n    @include ('partials.nav')\n    <div class=\"container\">\n        @yield('content')\n    </div>\n    <h1 class=\"page-heading\"><ul>\n    	<li></li>\n    	<li></li>\n    	<li></li>\n    	<li></li>\n    </ul></h1>\n    <script src=\"//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js\"></script>\n    <script src=\"//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js\"></script>\n</body>\n\nbootform\n\n</html>\n	\n<button type=\"button\" class=\"btn btn-large btn-block btn-default\">button</button>	\n\n{!! Form::open(['method' => 'POST', 'route' => 'routeName', 'class' => 'form-horizontal']) !!}\n\n    boottext\n\n    <div class=\"btn-group pull-right\">\n        {!! Form::reset(\"Reset\", ['class' => 'btn btn-warning']) !!}\n        {!! Form::submit(\"Add\", ['class' => 'btn btn-success']) !!}\n    </div>\n\n\n{!! Form::close() !!}\n\n\n<div class=\"form-group @if($errors->first('inputname')) has-error @endif\">\n	    {!! Form::label('inputname', 'Input label') !!}\n	    {!! Form::text('inputname', null, ['class' => 'form-control', 'required' => 'required']) !!}\n	    <small class=\"text-danger\">{{ $errors->first('inputname') }}</small>\n	</div>	\n\n	<div class=\"form-group @if($errors->first('inputname')) has-error @endif\">\n	    {!! Form::label('inputname', 'Input label') !!}\n	    {!! Form::textarea('inputname', null, ['class' => 'form-control', 'required' => 'required']) !!}\n	    <small class=\"text-danger\">{{ $errors->first('inputname') }}</small>\n	</div>\n\n	{!! Form::open(['method' => 'POST', 'route' => 'routeName', 'class' => 'form-horizontal']) !!}\n	\n	    boottext\n	\n	    <div class=\"btn-group pull-right\">\n	        {!! Form::reset(\"Reset\", ['class' => 'btn btn-warning']) !!}\n	        {!! Form::submit(\"Add\", ['class' => 'btn btn-success']) !!}\n	    </div>\n	\n	{!! Form::close() !!}\n\n	lay	\n\n	{!! Form::open(['method' => 'POST', 'route' => 'routeName', 'class' => 'form-horizontal']) !!}\n	\n	    boottext\n	\n	    <div class=\"btn-group pull-right\">\n	        {!! Form::reset(\"Reset\", ['class' => 'btn btn-warning']) !!}\n	        {!! Form::submit(\"Add\", ['class' => 'btn btn-success']) !!}\n	    </div>\n	\n	{!! Form::close() !!}\n\n	<div class=\"form-group @if($errors->first('password')) has-error @endif\">\n	    {!! Form::label('password', 'Password') !!}\n	    {!! Form::password('password', ['class' => 'form-control', 'required' => 'required']) !!}\n	    <small class=\"text-danger\">{{ $errors->first('password') }}</small>\n	</div>\n\n	<div class=\"form-group @if($errors->first('abce')) has-error @endif\">\n	    {!! Form::label('abce', 'fasfd') !!}\n	    {!! Form::select('abce', $options, null, ['id' => 'abce', 'class' => 'form-control', 'required' => 'required', 'multiple']) !!}\n	    <small class=\"text-danger\">{{ $errors->first('abce') }}</small>\n	</div>",
-			"file": "resources/views/app.blade.php",
-			"file_size": 707,
-			"file_write_time": 130907636653974006,
-			"settings":
-			{
-				"buffer_size": 3040,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Package Control Messages\n========================\n\nSASS Snippets\n-------------\n\n  Sass Snippets for Sublime\n  =========================\n  \n  Sass snippets for Sublime text 2/3.\n  \n  \n  Content\n  =======\n  \n  - Directives snippets\n  - Flags snippets\n  - Functions snippets\n  - CSS Extensions snippets\n  \n  \n  Authors\n  =======\n  \n  Claudio Sanches\n      Twitter : @claudiosmweb\n      Github  : https://github.com/claudiosmweb\n  \n  Vitor Britto\n      Twitter : @vitorbritto\n      Github  : https://github.com/vitorbritto\n  \n  \n  Support\n  =======\n  \n  Please direct any feedback to <sublimebrasil@vitorbritto.com.br> or through github at https://github.com/sublimebrasil/sublime-snippets-sass.\n  \n  Thank you for your support.\n\n\nSublimeLinter\n-------------\n\n  \n    ____        _     _ _                _     _       _\n   / ___| _   _| |__ | (_)_ __ ___   ___| |   (_)_ __ | |_ ___ _ __\n   \\___ \\| | | | '_ \\| | | '_ ` _ \\ / _ \\ |   | | '_ \\| __/ _ \\ '__|\n    ___) | |_| | |_) | | | | | | | |  __/ |___| | | | | ||  __/ |\n   |____/ \\__,_|_.__/|_|_|_| |_| |_|\\___|_____|_|_| |_|\\__\\___|_|\n  \n  \n  Welcome to SublimeLinter, a linter framework for Sublime Text 3.\n  \n                   * * * IMPORTANT! * * *\n  \n          SublimeLinter 3 is NOT a drop-in replacement for\n          earlier versions.\n  \n          Linters *NOT* included with SublimeLinter 3, \n          they must be installed separately.\n  \n          The settings are different.\n  \n                  * * * READ THE DOCS! * * *\n  \n  Otherwise you will never know how to install linters, nor will\n  you know about all of the great new features in SublimeLinter 3.\n  \n  For complete documentation on how to install and use SublimeLinter,\n  please see:\n  \n  http://www.sublimelinter.com\n  \n  \n                   _   _      _       _\n                  | | | | ___| |_ __ | |\n                  | |_| |/ _ \\ | '_ \\| |\n                  |  _  |  __/ | |_) |_|\n                  |_| |_|\\___|_| .__/(_)\n                               |_|\n  \n  \n  Hundreds of hours have been spent writing and documenting SublimeLinter\n  to make it the best it can be — easy to use, easy to configure,\n  easy to update, easy to extend. If you use SublimeLinter and feel\n  it is making your coding life better and easier, please consider\n  making a donation to help fund development and support.\n  \n  To donate: https://github.com/SublimeLinter/SublimeLinter3#share-the-love\n  \n  Thank you!\n\n\nSublimeLinter-php\n-----------------\n\n  SublimeLinter-php\n  -------------------------------\n  This linter plugin for SublimeLinter provides an interface to php -l.\n  \n  ** IMPORTANT! **\n  \n  Before this plugin will activate, you *must*\n  follow the installation instructions here:\n  \n  https://github.com/SublimeLinter/SublimeLinter-php\n",
-			"settings":
-			{
-				"buffer_size": 2759,
-				"line_ending": "Windows",
-				"name": "Package Control Messages",
-				"read_only": true,
-				"scratch": true
-			}
-		},
-		{
-			"contents": "@import \"partials/colors.scss\";\n@import \"partials/headings.scss\";\n\n\nmixin		\n",
-			"file": "resources/assets/sass/app.scss",
-			"file_size": 68,
-			"file_write_time": 130905915965055748,
-			"settings":
-			{
-				"buffer_size": 76,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<snippet>\n	<content><![CDATA[\nHello, ${1:this} is a ${2:snippet}.\n]]></content>\n	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->\n	<!-- <tabTrigger>hello</tabTrigger> -->\n	<!-- Optional: Set a scope to limit where the snippet will trigger -->\n	<!-- <scope>source.python</scope> -->\n</snippet>\n",
-			"settings":
-			{
-				"buffer_size": 317,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
-			"settings":
-			{
-				"buffer_size": 586,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
-			"settings":
-			{
-				"buffer_size": 4056,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "",
-			"file": "lantra/abc.blade.php",
-			"file_size": 0,
-			"file_write_time": 130907543188010146,
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "bootstrap/autoload.php",
-			"settings":
-			{
-				"buffer_size": 1079,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": ".gitattributes",
-			"settings":
-			{
-				"buffer_size": 61,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "@extends ('app')",
-			"file": "resources/views/lantra/abc.blade.php",
-			"file_size": 16,
-			"file_write_time": 130907545302061063,
-			"settings":
-			{
-				"buffer_size": 16,
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -196,7 +77,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 219.0,
+		"height": 392.0,
 		"last_filter": "install",
 		"selected_items":
 		[
@@ -249,7 +130,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 528.0
+		"width": 808.0
 	},
 	"console":
 	{
@@ -275,6 +156,8 @@
 		"/D/Soft/Laragon/www/dmca-app/app/Http",
 		"/D/Soft/Laragon/www/dmca-app/app/Http/Controllers",
 		"/D/Soft/Laragon/www/dmca-app/bootstrap",
+		"/D/Soft/Laragon/www/dmca-app/database",
+		"/D/Soft/Laragon/www/dmca-app/database/migrations",
 		"/D/Soft/Laragon/www/dmca-app/public",
 		"/D/Soft/Laragon/www/dmca-app/public/css",
 		"/D/Soft/Laragon/www/dmca-app/resources",
@@ -285,9 +168,26 @@
 	],
 	"file_history":
 	[
-		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/Default/Preferences.sublime-settings",
-		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/D/Soft/Laragon/www/dmca-app/public/css/app.css",
+		"/D/Soft/Laragon/www/dmca-app/resources/views/pages/home.blade.php",
+		"/D/Soft/Laragon/www/dmca-app/public/css/app.min.css",
+		"/D/Soft/Laragon/www/dmca-app/test.html",
+		"/D/Soft/Laragon/www/dmca-app/resources/views/app.blade.php",
+		"/D/Soft/Laragon/www/dmca-app/resources/assets/sass/app.scss",
 		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/D/Soft/Laragon/www/dmca-app/lantra/abc.blade.php",
+		"/D/Soft/Laragon/www/dmca-app/bootstrap/autoload.php",
+		"/D/Soft/Laragon/www/dmca-app/.gitattributes",
+		"/D/Soft/Laragon/www/dmca-app/resources/views/lantra/abc.blade.php",
+		"/D/Soft/Laragon/www/dmca-app/database/migrations/2015_11_01_134645_create_notices_table.php",
+		"/D/Soft/Laragon/www/dmca-app/vendor/laravel/framework/src/Illuminate/View/View.php",
+		"/D/Soft/Laragon/www/dmca-app/vendor/laravel/framework/src/Illuminate/Http/Request.php",
+		"/D/Soft/Laragon/www/dmca-app/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php",
+		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/PHP Companion/PHP Companion.sublime-settings",
+		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/User/PHP Companion.sublime-settings",
+		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/Default/Preferences.sublime-settings",
 		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/AppNee.com.Sublime.Text.3.B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
 		"/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/AppNee.com.Sublime.Text.3.B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
 		"/D/Soft/Laragon/www/dmca-app/lantra/tes.php",
@@ -297,7 +197,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -312,6 +212,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"file",
 			"tab",
 			"confirm(",
 			"Test item",
@@ -339,7 +240,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -367,7 +268,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -376,464 +277,90 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1518,
+						"buffer_size": 1836,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								887,
-								887
+								1782,
+								1782
 							]
 						],
 						"settings":
 						{
+							"auto_complete": false,
+							"spell_check": false,
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 487.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "public/css/app.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 310,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								310,
-								310
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "resources/views/pages/home.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 387,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								387,
-								387
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "public/css/app.min.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 280,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								280,
-								280
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "test.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1837,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1837,
-								1837
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 465.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "resources/views/app.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3040,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2077,
-								2077
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 765.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2759,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2708,
-								2757
-							]
-						],
-						"settings":
-						{
-							"auto_indent": false,
-							"default_dir": "D:\\Soft\\Laragon\\www\\dmca-app",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_width": 2,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1140.0,
+						"translation.y": 585.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "resources/assets/sass/app.scss",
+					"buffer": 2,
+					"file": "app/User.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 76,
+						"buffer_size": 1312,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								76,
-								76
+								1309,
+								1309
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 317,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								317,
-								317
-							]
-						],
-						"settings":
-						{
-							"default_dir": "D:\\Soft\\IDE\\Sublime 3\\Sublime Text 3 Portable Full Registered for Win, Linux and Mac\\B.3095.x64.Portable\\Data\\Packages\\User",
-							"default_extension": "sublime-snippet",
-							"syntax": "Packages/XML/XML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 586,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 2,
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 45.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "/D/Soft/IDE/Sublime 3/Sublime Text 3 Portable Full Registered for Win, Linux and Mac/B.3095.x64.Portable/Data/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+					"buffer": 3,
+					"file": "app/Notice.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4056,
+						"buffer_size": 798,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								929,
-								929
+								578,
+								578
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"default_dir": "D:\\Soft\\Laragon\\www\\dmca-app",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "lantra/abc.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"_anf_new": "",
-							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "bootstrap/autoload.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1079,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								397,
-								397
-							]
-						],
-						"settings":
-						{
+							"auto_complete": false,
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 69.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": ".gitattributes",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 61,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								61,
-								61
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "resources/views/lantra/abc.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								16
-							]
-						],
-						"settings":
-						{
-							"_anf_new": "",
-							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -891,6 +418,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"user",
+				"app\\User.php"
+			],
 			[
 				"",
 				".gitattributes"
@@ -968,7 +499,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 178.0,
+	"side_bar_width": 345.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notice extends Model
 {
+	
+
     /**
      *  Fillable fields for a new notice
      */
@@ -19,26 +21,20 @@ class Notice extends Model
         'content_removed',
     ];
 
-    /**
-     *  Open a new notice.
-     * 
-     *  @param array $attributes
-     *  @return static
-     */
-	public static function open(array $attributes)
-    {
-        return new static($attributes);
+    public function recipient() {
+        return $this->belongsTo('App\Provider', 'provider_id');
     }
 
-    /**
-     *  Set the email template for the notice.
-     * 
-     *  @param strig $template
-     */
-    public function useTemplate($template)
-    {
-        $this->template = $template;
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 
-        return $this;
+
+    public function getRecipientEmail() {
+        return $this->recipient->copyright_email;
+    }
+
+    public function getOwnerEmail() {
+        return $this->user->email;
     }
 }
