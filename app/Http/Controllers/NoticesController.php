@@ -7,9 +7,7 @@ use App\Http\Requests;
 use App\Http\Requests\PrepareNoticeRequest;
 use App\Notice;
 use App\Provider;
-use Illuminate\Auth\Guard;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class NoticesController extends Controller
@@ -18,12 +16,14 @@ class NoticesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        parent::__construct();
     }
 
 
     public function index()
     {
-        return Auth::user()->notices;
+        return $this->user->notices;
     }
 
 
@@ -37,9 +37,9 @@ class NoticesController extends Controller
     }
 
 
-    public function confirm(PrepareNoticeRequest $request, Guard $auth)
+    public function confirm(PrepareNoticeRequest $request)
     {
-        $template = $this->compileDmcaTemplate($data = $request->all(), $auth);
+        $template = $this->compileDmcaTemplate($data = $request->all());
         session()->flash('dmca', $data);
 
         return view('notices.confirm', compact('template'));
@@ -71,16 +71,16 @@ class NoticesController extends Controller
     {
         $notice = session()->get('dmca') + ['template' => $request->input('template')];
         
-        $notice = Auth::user()->notices()->create($notice);
+        $notice = $this->user->notices()->create($notice);
 
         return $notice;
     }
 
-    public function compileDmcaTemplate($data, Guard $auth)
+    public function compileDmcaTemplate($data)
     {
         $data = $data + [
-                'name'  => $auth->user()->name,
-                'email' => $auth->user()->email,
+                'name'  => $this->user->name,
+                'email' => $this->user->email,
             ];
 
         return view()->file(app_path('Http/Templates/dmca.blade.php'), $data);
