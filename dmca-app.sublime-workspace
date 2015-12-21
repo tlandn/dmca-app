@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"fun",
+				"funtion"
+			],
+			[
 				"no",
 				"notices"
 			],
@@ -46,8 +50,88 @@
 			"file": "app/Http/Controllers/NoticesController.php",
 			"settings":
 			{
-				"buffer_size": 1836,
+				"buffer_size": 2060,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "composer.json",
+			"settings":
+			{
+				"buffer_size": 1455,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php",
+			"settings":
+			{
+				"buffer_size": 331,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/mail.php",
+			"settings":
+			{
+				"buffer_size": 4420,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/Http/Controllers/Controller.php",
+			"settings":
+			{
+				"buffer_size": 549,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/queue.php",
+			"settings":
+			{
+				"buffer_size": 2696,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "storage/logs/.gitignore",
+			"settings":
+			{
+				"buffer_size": 14,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".env",
+			"settings":
+			{
+				"buffer_size": 270,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "node_modules/laravel-elixir/node_modules/gulp-babel/node_modules/babel-core/node_modules/regenerator/node_modules/commoner/test/source/tests/settings.js",
+			"settings":
+			{
+				"buffer_size": 33,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/services.php",
+			"settings":
+			{
+				"buffer_size": 985,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "resources/views/emails/dmca.blade.php",
+			"settings":
+			{
+				"buffer_size": 23,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -59,13 +143,10 @@
 			}
 		},
 		{
-			"contents": "<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Notice extends Model\n{\n	\n\n    /**\n     *  Fillable fields for a new notice\n     */\n    protected $fillable = [\n        'provider_id',\n        'infringing_title',\n        'infringing_link',\n        'original_link',\n        'original_description',\n        'template',\n        'content_removed',\n    ];\n\n    /**\n     *  Open a new notice.\n     * \n     *  @param array $attributes\n     *  @return static\n     */\n	public static function open(array $attributes)\n    {\n        return new static($attributes);\n    }\n\n    /**\n     *  Set the email template for the notice.\n     * \n     *  @param strig $template\n     */\n    public function useTemplate($template)\n    {\n        $this->template = $template;\n\n        return $this;\n    }\n}\n",
 			"file": "app/Notice.php",
-			"file_size": 795,
-			"file_write_time": 130908605261054928,
 			"settings":
 			{
-				"buffer_size": 798,
+				"buffer_size": 738,
 				"line_ending": "Unix"
 			}
 		}
@@ -156,6 +237,7 @@
 		"/D/Soft/Laragon/www/dmca-app/app/Http",
 		"/D/Soft/Laragon/www/dmca-app/app/Http/Controllers",
 		"/D/Soft/Laragon/www/dmca-app/bootstrap",
+		"/D/Soft/Laragon/www/dmca-app/config",
 		"/D/Soft/Laragon/www/dmca-app/database",
 		"/D/Soft/Laragon/www/dmca-app/database/migrations",
 		"/D/Soft/Laragon/www/dmca-app/public",
@@ -164,7 +246,10 @@
 		"/D/Soft/Laragon/www/dmca-app/resources/assets",
 		"/D/Soft/Laragon/www/dmca-app/resources/assets/sass",
 		"/D/Soft/Laragon/www/dmca-app/resources/views",
-		"/D/Soft/Laragon/www/dmca-app/resources/views/pages"
+		"/D/Soft/Laragon/www/dmca-app/resources/views/emails",
+		"/D/Soft/Laragon/www/dmca-app/resources/views/pages",
+		"/D/Soft/Laragon/www/dmca-app/storage",
+		"/D/Soft/Laragon/www/dmca-app/storage/logs"
 	],
 	"file_history":
 	[
@@ -212,6 +297,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"funtion",
+			"    // $data = session()->get('dmca');\n        // $notice = Notice::open($data)\n        //     ->useTemplate($request->input('template'));\n        \n        // Auth::user()->notices()->save($notice);\n",
 			"file",
 			"tab",
 			"confirm(",
@@ -240,7 +327,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 8,
 			"sheets":
 			[
 				{
@@ -268,7 +355,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
@@ -277,15 +364,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1836,
+						"buffer_size": 2060,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1782,
-								1782
+								295,
+								403
 							]
 						],
 						"settings":
@@ -297,14 +384,307 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 585.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "composer.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1455,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								409,
+								409
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 331,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								122,
+								122
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "config/mail.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4420,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								556,
+								567
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/Http/Controllers/Controller.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 549,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								405,
+								405
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "config/queue.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2696,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								557,
+								598
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "storage/logs/.gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": ".env",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 270,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								269,
+								210
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 9,
+					"file": "node_modules/laravel-elixir/node_modules/gulp-babel/node_modules/babel-core/node_modules/regenerator/node_modules/commoner/test/source/tests/settings.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 33,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "config/services.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 985,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								680,
+								695
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "resources/views/emails/dmca.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10,
+								10
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"open_with_edit": true,
+							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
 					"file": "app/User.php",
 					"semi_transient": false,
 					"settings":
@@ -328,39 +708,41 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 45.0,
+						"translation.y": 315.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 13,
 					"file": "app/Notice.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 798,
+						"buffer_size": 738,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								578,
-								578
+								595,
+								595
 							]
 						],
 						"settings":
 						{
 							"auto_complete": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 69.0,
+						"translation.y": 90.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 11,
 					"type": "text"
 				}
 			]
@@ -418,6 +800,46 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"settings",
+				"node_modules\\laravel-elixir\\node_modules\\gulp-babel\\node_modules\\babel-core\\node_modules\\regenerator\\node_modules\\commoner\\test\\source\\tests\\settings.js"
+			],
+			[
+				".e",
+				".env"
+			],
+			[
+				"mail",
+				"config\\mail.php"
+			],
+			[
+				"app",
+				"config\\app.php"
+			],
+			[
+				"com",
+				"composer.json"
+			],
+			[
+				"control",
+				"app\\Http\\Controllers\\Controller.php"
+			],
+			[
+				"notic",
+				"app\\Notice.php"
+			],
+			[
+				"logs/",
+				"storage\\logs\\.gitignore"
+			],
+			[
+				"que",
+				"config\\queue.php"
+			],
+			[
+				"config/m",
+				"config\\mail.php"
+			],
 			[
 				"user",
 				"app\\User.php"
