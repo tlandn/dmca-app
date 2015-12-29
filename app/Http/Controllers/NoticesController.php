@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use App\Http\Requests\PrepareNoticeRequest;
 use App\Notice;
 use App\Provider;
@@ -20,13 +18,12 @@ class NoticesController extends Controller
         parent::__construct();
     }
 
-
     public function index()
     {
         $notices = $this->user->notices()->latest()->get();
+
         return view('notices.index', compact('notices'));
     }
-
 
     public function create()
     {
@@ -37,16 +34,13 @@ class NoticesController extends Controller
         return view('notices.create', compact('providers'));
     }
 
-
     public function confirm(PrepareNoticeRequest $request)
     {
         $template = $this->compileDmcaTemplate($data = $request->all());
         session()->flash('dmca', $data);
 
         return view('notices.confirm', compact('template'));
-
     }
-
 
     /**
      *  Store a new DMCA notice.
@@ -57,12 +51,14 @@ class NoticesController extends Controller
      */
     public function store(Request $request)
     {
+        \Debugbar::debug($request->request);
+       // debug($request);
         $notice = $this->createNotice($request);
 
-        Mail::queue(['text' => 'emails.dmca'], compact('notice'), function($message) use ($notice) {
+        Mail::queue(['text' => 'emails.dmca'], compact('notice'), function ($message) use ($notice) {
             $message->from($notice->getOwnerEmail())
-                    ->to($notice->getRecipientEmail())
-                    ->subject('DMCA Notice');
+                ->to($notice->getRecipientEmail())
+                ->subject('DMCA Notice');
         });
 
         flash('Your DMCA notice has been delivered!');
@@ -70,7 +66,8 @@ class NoticesController extends Controller
         return redirect('notices');
     }
 
-    public function update($noticeId, Request $request) {
+    public function update($noticeId, Request $request)
+    {
         $isRemoved = $request->has('content_removed');
 
         Notice::findOrFail($noticeId)->update(['content_removed' => $isRemoved]);
@@ -79,7 +76,7 @@ class NoticesController extends Controller
     private function createNotice(Request $request)
     {
         $notice = session()->get('dmca') + ['template' => $request->input('template')];
-        
+
         $notice = $this->user->notices()->create($notice);
 
         return $notice;
@@ -88,11 +85,10 @@ class NoticesController extends Controller
     public function compileDmcaTemplate($data)
     {
         $data = $data + [
-                'name'  => $this->user->name,
-                'email' => $this->user->email,
-            ];
+            'name' => $this->user->name,
+            'email' => $this->user->email,
+        ];
 
         return view()->file(app_path('Http/Templates/dmca.blade.php'), $data);
     }
-
 }

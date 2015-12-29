@@ -1,10 +1,19 @@
 @extends('app')
-
+<div class="star">  dfasfasdf</div>
+<h1>
+  <h4></h4>
+</h1>
+<h1>
+  <h2> sdaf  sdfas </h2>
+</h1>
 @section('content')
+
+    {{ debug($notices) }}
+
     <h1 class="page-heading">Your Notices</h1>
 
     <table class="table table-striped table bordered">
-        <thead>
+                  <thead>
             <th>This Content:</th>
             <th>Accessible Here:</th>
             <th>Is Infringing Upon My Work Here:</th>
